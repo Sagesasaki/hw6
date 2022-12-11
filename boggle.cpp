@@ -94,4 +94,25 @@ bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>
 {
 //add your solution here!
 
+	if ( r == board.size()) { //base case to check if you have reached the last row and column
+		return false;
+		}
+	if ( c == board.size()){
+		return false;
+	}
+	if (word.size() != 0 && (prefix.find(word) == prefix.end()) && dict.find(word) != dict.end()){
+		result.insert(word);
+		return true;
+	}
+	if (word.size() != 0 && (prefix.find(word) == prefix.end()) && dict.find(word) == dict.end()){
+		return false;
+	}
+	word += board[r][c];
+	bool rec = boggleHelper( dict, prefix, board , word , result , r + dr, c + dc , dr , dc);
+	if ( rec == false && dict.find(word) != dict.end() ) { //if it returns false which meant that the word is no longer in dictionary
+		result.insert(word);
+		return true;
+	}
+	return rec;
+
 }
